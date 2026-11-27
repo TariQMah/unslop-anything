@@ -1428,6 +1428,10 @@ const rules = [
       }
       if (!/focus-visible/.test(code)) {
         for (const m of matches(/outline:\s*(?:["']?none["']?|0\b)/, code)) hits.push(m.index);
+        // The longhand removes the ring just the same (#250): `outline-style: none`
+        // in CSS, and `outlineStyle: "none"` in a React style object.
+        for (const m of matches(/\boutline-style:\s*["']?none["']?\b/, code)) hits.push(m.index);
+        for (const m of matches(/\boutlineStyle:\s*["']none["']/, code)) hits.push(m.index);
       }
       return hits;
     },
